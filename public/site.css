@@ -1,0 +1,41 @@
+body {
+  font-family: Georgia, Cambria, "Times New Roman", Times, serif;
+  font-size: 14pt;
+}
+
+main {
+  max-width: 75%;
+  margin: auto;
+}
+
+h1 {
+  font-size: 2rem;
+}
+
+h2 {
+  font-size: 1.5rem;
+}
+
+h3 {
+  font-size: 1.0rem;
+  color: red;
+}
+
+#current {
+  font-size: 150%;
+  font-family: verdana;
+}
+
+li {
+  margin: 5px;
+}
+
+footer {
+  border: 1px solid powderblue;
+  padding: 30px;
+}
+
+img {
+  width: 450px;
+  height: 350px;
+}

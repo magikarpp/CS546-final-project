@@ -1,0 +1,28 @@
+{
+  "name": "cs546-final-project",
+  "version": "1.0.0",
+  "description": "",
+  "main": "app.js",
+  "scripts": {
+    "start": "node app.js",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/magikarpp/CS546-final-project.git"
+  },
+  "author": "Jaemin Shim, Matthew Josephs, Aboubacar Diawara",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/magikarpp/CS546-final-project/issues"
+  },
+  "homepage": "https://github.com/magikarpp/CS546-final-project#readme",
+  "dependencies": {
+    "bcrypt-nodejs": "0.0.3",
+    "body-parser": "^1.18.2",
+    "cookie-parser": "^1.4.3",
+    "express": "^4.16.3",
+    "express-handlebars": "^3.0.0",
+    "mongodb": "^3.0.7"
+  }
+}
