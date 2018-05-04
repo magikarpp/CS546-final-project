@@ -3,7 +3,7 @@ const bodyParser = require("body-parser");
 const cookieParser = require("cookie-parser");
 const app = express();
 const static = express.static(__dirname + "/public");
-const connection = require("./mongoConnection");
+const connection = require("./config/mongoConnection");
 
 
 const configRoutes = require("./routes");
@@ -21,7 +21,7 @@ const main = async () => {
   const db = await connection();
   //await db.serverConfig.close();
 };
- 
+
 main().catch(error => {
   console.log(error);
 });

@@ -1,4 +1,4 @@
-const mongoCollections = require("../mongoCollections");
+const mongoCollections = require("../config/mongoCollections");
 const campgrounds = mongoCollections.campgrounds;
 //const users = require("./users");
 //const uuid = require("node-uuid");
