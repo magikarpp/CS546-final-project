@@ -3,6 +3,8 @@ const bodyParser = require("body-parser");
 const cookieParser = require("cookie-parser");
 const app = express();
 const static = express.static(__dirname + "/public");
+const connection = require("./mongoConnection");
+
 
 const configRoutes = require("./routes");
 const exphbs = require("express-handlebars");
@@ -14,6 +16,16 @@ app.use(bodyParser.urlencoded());
 
 app.engine("handlebars", exphbs({ defaultLayout: "main" }));
 app.set("view engine", "handlebars");
+
+const main = async () => {
+  const db = await connection();
+  //await db.serverConfig.close();
+};
+ 
+main().catch(error => {
+  console.log(error);
+});
+
 
 configRoutes(app);
 
