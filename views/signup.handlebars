@@ -2,15 +2,24 @@
 <h3>{{message}}</h3>
 {{/if}}
 
-<h1>Welcome!</h1>
-<p>hahahahaha.</p>
+<h1>Sign Up Here!</h1>
+<p>Please enter the following information to create a new account.</p>
 
-<form id = "login-form" action = "/login" method = "post"> <!-- action = ? method ="post"? -->
-    <label>raegergaergaergae: </label>
-    <input id = "username" name = "username" placeholder = "username">
-    <label>Password: </label>
-    <input id = "password" name = "password" placeholder = "password">
-    <button type = "submit">Log In</button>
+<form id = "signup-form" action = "/users/signup" method = "post">
+  <ul>
+    <li>
+      <label>Username: </label>
+      <input id = "username" name = "username" placeholder = "username">
+    </li>
+    <li>
+      <label>Password: </label>
+      <input id = "password" name = "password" placeholder = "password">
+    </li>
+    <li>
+      <label>Bio: </label>
+      <input id = "bio" name = "bio" placeholder = "bio">
+    </li>
+    <button type = "submit">Sign Up</button>
 </form>
 
 <h4><a href = "login">Log In</h4>

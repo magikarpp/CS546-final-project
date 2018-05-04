@@ -6,7 +6,6 @@ const campgroundData = data.campgrounds;
 
 router.post("/", async (req, res) => {
     try {
-      //console.log("Got to the POST route!");
       let newCampground = await campgroundData.addCampground(req.body);
 
       res.json(newCampground);
@@ -15,4 +14,8 @@ router.post("/", async (req, res) => {
   }
 });
 
+<<<<<<< Updated upstream
 module.exports = router;
+=======
+module.exports = router;
+>>>>>>> Stashed changes

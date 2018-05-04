@@ -18,11 +18,9 @@ module.exports = {
         return campground;
     },
 
-
     async addCampground({name, password, bio}) {
         //ERROR CHECK!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!1
         const campgroundCollection = await campgrounds();
-
         //console.log(name);
 
         let setId = uuidv4();
