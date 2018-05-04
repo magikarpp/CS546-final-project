@@ -25,7 +25,6 @@ module.exports = {
         const userCollection = await users();
 
         console.log(name);
-        
         let setId = uuidv4();
         const newUser = {
           sessionid: "0", //This will be set to a non-zero uuid upon login

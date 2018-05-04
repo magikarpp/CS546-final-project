@@ -7,7 +7,7 @@ const userData = data.users;
 
 router.post("/", async (req, res) => {
     try {
-      console.log("Got to the POST route!");
+      //console.log("Got to the POST route!");
       let newUser = await userData.addUser(req.body);
 
       res.json(newUser);
