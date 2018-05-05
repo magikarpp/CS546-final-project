@@ -6,6 +6,20 @@ const uuidv4 = require('uuid/v4');
 const bcrypt = require('bcrypt-nodejs');
 
 module.exports = {
+    async setSessionId(username, trig){
+      if(username === undefined || typeof username !== "string"){
+          throw new Error("username is not a string");
+      }
+      const userCollection = await users();
+      const user = await userCollection.findOne({ "profile.username": username });
+      if(trig == 0){
+        user._id = "0";
+      }
+      if(trig == 1){
+        user._id = uuidv4();
+      }
+    },
+
     async getUserByUsername(username){
       if(username === undefined || typeof username !== "string"){
           throw new Error("username is not a string");
@@ -35,39 +49,82 @@ module.exports = {
       const userCollection = await users();
       const user = await userCollection.findOne({ "profile.username": username });
 
-      if(username === undefined || typeof username !== "string"){
-        throw new Error("Invalid Username");
+      if(username == "" || username === undefined || typeof username !== "string"){
+        return {
+          status: false,
+          message: "Username invalid"
+        };
       }
       if(user){
-        throw new Error("Username Taken");
+        return {
+          status: false,
+          message: "Username already taken"
+        };
       }
-      if(password === undefined || typeof password !== "string"){
-        throw new Error("Invalid password");
+      if(password == "" || password === undefined || typeof password !== "string"){
+        return {
+          status: false,
+          message: "Password invalid"
+        };
       }
       if(bio === undefined || typeof bio !== "string"){
-        throw new Error("Invalid bio");
+        return {
+          status: false,
+          message: "Bio invalid"
+        };
       }
 
-      let setId = uuidv4();
       const newUser = {
         sessionid: "0", //This will be set to a non-zero uuid upon login
-        hashedPassword: password, //Need to actually hash it (Bcrypt)
+        hashedPassword: password, //hashed using createHashedPassword
+        _id: uuidv4(),
         profile: {
             username: username,
-            bio: bio,
-            _id: setId
-        },
-        _id: setId
+            bio: bio
+        }
       };
 
       const newInsertInformation = await userCollection.insertOne(newUser);
-      return await this.getUserById(newInsertInformation.insertedId);
+      return {
+        status: true,
+        message: "New User Created"
+      };
+    },
+
+    async updateUser(id, username, bio){
+      const userCollection = await users();
+      const anotherUser = await userCollection.findOne({ "profile.username": username, _id: {"$ne": id} });
+
+      if(username == "" || username === undefined || typeof username !== "string"){
+        return {
+          status: false,
+          message: "Username invalid"
+        };
+      }
+      if(anotherUser){
+        return {
+          status: false,
+          message: "Username already taken"
+        };
+      }
+      if(bio === undefined || typeof bio !== "string"){
+        return {
+          status: false,
+          message: "Bio invalid"
+        };
+      }
+
+      await userCollection.findOneAndUpdate ({ _id: id }, {"$set": { "profile.username": username, "profile.bio": bio }});
+      return {
+        status: true,
+        message: "Account Updated!"
+      };
     },
 
     async verifyUserPassword(username, password){
       const userCollection = await users();
       const user = await userCollection.findOne({ "profile.username": username });
-      if(!user){
+      if(username == "" || username === undefined || typeof username !== "string" || !user){
         return {
           status: false,
           message: "Username invalid"
@@ -87,7 +144,7 @@ module.exports = {
     },
 
     createHashedPassword: (password) => {
-      if(password === undefined || typeof password !== "string"){
+      if(password == "" || password === undefined || typeof password !== "string"){
         throw new Error("Invalid password");
       }
       var salt = bcrypt.genSaltSync(7);

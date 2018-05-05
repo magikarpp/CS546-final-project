@@ -36,7 +36,6 @@ router.get("/account", async (req, res) => {
   if(req.cookies["AuthCookie"] != undefined){
     let username = req.cookies["AuthCookie"];
     let userInfo = await userData.getUserByUsername(username);
-    console.log(userInfo);
 
     res.render('account.handlebars', {
       username: userInfo.profile.username,
@@ -50,7 +49,7 @@ router.get("/account", async (req, res) => {
   }
 });
 
-router.get("/logout", (req, res) => {
+router.get("/logout", async (req, res) => {
   res.clearCookie("AuthCookie");
   res.redirect("/users");
 });
@@ -63,8 +62,70 @@ router.post("/signup", async (req, res) => {
   let username = req.body.username;
   let password = userData.createHashedPassword(req.body.password);
   let bio = req.body.bio;
+
   let newUser = await userData.addUser({username, password, bio});
-  res.redirect("/users/login");
+  if(newUser.status){
+    res.redirect("/users/login");
+  }else{
+    res.render("signup.handlebars", {
+      error: true,
+      message: newUser.message
+    });
+  }
 });
+
+router.get("/edit", async (req, res) => {
+  if(req.cookies["AuthCookie"] != undefined){
+    let username = req.cookies["AuthCookie"];
+    let user = await userData.getUserByUsername(username);
+    res.render("edit.handlebars", {user});
+  }else{
+    res.redirect("/users");
+  }
+});
+
+router.post("/edit", async (req, res) => {
+  if(req.cookies["AuthCookie"] != undefined){
+    let currrentUser = req.cookies["AuthCookie"];
+    console.log(currrentUser);
+    let user = await userData.getUserByUsername(currrentUser);
+
+    let username = req.body.username;
+    let bio = req.body.bio;
+    console.log(username);
+    console.log(bio);
+
+    let result = await userData.updateUser(user._id, username, bio);
+
+    if(result.status){
+      res.cookie("AuthCookie", username);
+      res.redirect("/users/account");
+    }else{
+      res.render("edit.handlebars", {
+        user,
+        error: true,
+        message: result.message
+      });
+    }
+  }else{
+    res.redirect("/users");
+  }
+});
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 module.exports = router;

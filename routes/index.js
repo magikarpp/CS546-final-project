@@ -6,7 +6,7 @@ const constructorMethod = app => {
   app.use("/campgrounds", campgroundsRoute);
 
   app.use("*", (req, res) => {
-    res.status(404).json({error: "Not found"});
+    res.redirect("/users");
   });
 };
 
