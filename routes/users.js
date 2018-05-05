@@ -8,7 +8,8 @@ router.get("/", async (req, res) => {
   if(req.cookies["AuthCookie"] == undefined){
     res.redirect("/users/login");
   }else{
-    res.redirect("/users/account");
+    //res.redirect("/users/account");
+    res.redirect("/campgrounds");
   }
 });
 
@@ -23,7 +24,8 @@ router.post("/login", async (req, res) => {
 
   if(result.status){
     res.cookie("AuthCookie", username);
-    res.redirect("/users/account");
+    //res.redirect("/users/account");
+    res.redirect("/campgrounds");
   }else{
     res.render("login.handlebars", {
       error: true,

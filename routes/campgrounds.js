@@ -4,7 +4,15 @@ const express = require("express");
 const router = express.Router();
 const campgroundData = data.campgrounds;
 
-router.post("/", async (req, res) => {
+router.get("/", (req, res) => {
+  res.render("campground_list.handlebars");
+});
+
+router.get("/new", (req, res) => {
+  res.render("campground_new.handlebars");
+});
+
+router.post("/new", async (req, res) => {
     try {
       let newCampground = await campgroundData.addCampground(req.body);
 

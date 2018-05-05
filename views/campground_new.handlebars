@@ -1,0 +1,33 @@
+<!-- Side navigation -->
+<div class="sidenav">
+  <a href="/campgrounds">Campgrounds</a>
+  <br/>
+  <a href="/users/account">Edit Account</a>
+  <br/>
+  <a href="/users/logout">Logout</a>
+  <br/>
+</div>
+
+<div class="main">
+    <h1>New Campground</h1>
+    <p>Fill in the details for a new campground below!</p>
+
+<form id = "new-campground-form" action = "/campgrounds/new" method = "post">
+  
+      <label>Campground Title: </label>
+      <input id = "name" name = "name">
+      <br/>
+  
+      <label>Description: </label>
+      <input id = "description" name = "description">
+      <br/>
+
+      <label>Address/Location: </label>
+      <input id = "location" name = "location">
+      <br/>
+  
+
+    <button type = "submit">Sign Up</button>
+</form>
+
+</div>

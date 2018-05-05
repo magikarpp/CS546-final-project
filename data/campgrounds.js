@@ -18,14 +18,17 @@ module.exports = {
         return campground;
     },
 
-    async addCampground({name, password, bio}) {
+    async addCampground({name, description, location}) {
         //ERROR CHECK!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!1
         const campgroundCollection = await campgrounds();
         //console.log(name);
 
         let setId = uuidv4();
         const newCampground = {
-          _id: setId
+          _id: setId,
+          name: name,
+          description: description,
+          location: location
         };
 
         const newInsertInformation = await campgroundCollection.insertOne(newCampground);
