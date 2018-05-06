@@ -22,5 +22,28 @@
 
             {{#if isOwner}}
         		  <a href="/campgrounds/edit/id/{{campground._id}}"><button>Edit this campground</button></a>
-        		{{/if}}
+        	{{/if}}
+
+            <h3>Reviews</h3>
+            {{#if campground.reviews}}
+            <ol>
+                {{#each campground.reviews}}
+                <li>
+                    <p>
+                        {{this.reviewer}} says: {{this.review}}
+                    </p>
+                </li>
+                {{/each}}
+            </ol>
+            {{else}}
+            <p>There are no reviews yet</p>
+            {{/if}}
+
+            <form id = "add-review-form" action = "/campgrounds/review/{{campground._id}}" method = "post">
+                <label>Add Review: </label>
+                <br/>
+                <textarea id = "review" name = "review" rows="3" cols="50"></textarea>
+                <button type = "submit">Submit</button>
+            </form>
+
 </div>

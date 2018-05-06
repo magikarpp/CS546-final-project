@@ -62,6 +62,7 @@ module.exports = {
           image: image,
           price: price,
           contact_info: contact_info,
+          reviews: [],
           owner: owner
         };
 
@@ -75,6 +76,13 @@ module.exports = {
         await userCollection.findOneAndUpdate ({ "profile.username": owner }, {"$set": { campgrounds: user.campgrounds }});
         console.log(user);
         return await this.getCampById(newInsertInformation.insertedId);
+    },
+
+    async addReviewById(id, {review}, reviewer){
+        const campgroundCollection = await campgrounds();
+        const camp = await campgroundCollection.findOne({_id:id});
+        camp.reviews.push({review, reviewer});
+        await campgroundCollection.findOneAndUpdate ({ _id: id }, {"$set": { reviews: camp.reviews }});
     }
 
 };

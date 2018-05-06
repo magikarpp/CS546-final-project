@@ -64,4 +64,14 @@ router.post("/edit/info/:id", async (req, res) => {
 }
 });
 
+router.post("/review/:id", async (req, res) => {
+  try {
+    await campgroundData.addReviewById(req.params.id, req.body, req.cookies["AuthCookie"]);
+
+    res.redirect("/campgrounds/id/" + req.params.id);
+} catch (e) {
+  res.status(500).json({ error: e.message });
+}
+});
+
 module.exports = router;

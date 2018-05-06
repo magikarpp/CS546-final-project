@@ -36,7 +36,7 @@
     <br/>
     {{/if}}
 
-    <form  id = "edit-campground-image-form" action="/campgrounds/edit/image"  encType="multipart/form-data" method = "post">
+    <form  id = "edit-campground-image-form" action="/campgrounds/edit/image/{{campground._id}}"  encType="multipart/form-data" method = "post">
         <label>Change Campground Picture: </label>
         <input type="file" name="pic" accept="image/*">
     </form>
