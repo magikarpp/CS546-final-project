@@ -5,32 +5,67 @@ const router = express.Router();
 const campgroundData = data.campgrounds;
 
 router.get("/", async (req, res) => {
-  let campgroundList = await campgroundData.getAllCampgrounds();
-  res.render("campground_list.handlebars",{campgrounds: campgroundList});
+  if(req.cookies["AuthCookie"] != undefined){
+    let campgroundList = await campgroundData.getAllCampgrounds();
+    res.render("campground_list.handlebars",{campgrounds: campgroundList});
+  }else{
+    res.render("user_login.handlebars", {
+      error: true,
+      message: "Not logged in: Login using Username and Password"
+    });
+  }
 });
 
 router.get("/new", (req, res) => {
-  res.render("campground_new.handlebars");
+  if(req.cookies["AuthCookie"] != undefined){
+    res.render("campground_new.handlebars");
+  }else{
+    res.render("user_login.handlebars", {
+      error: true,
+      message: "Not logged in: Login using Username and Password"
+    });
+  }
 });
 
 router.get("/id/:id", async (req, res) => {
-  let campground = await campgroundData.getCampById(req.params.id);
-  let isOwner = false;
-  if(req.cookies["AuthCookie"] == campground.owner){
-    isOwner = true;
+  if(req.cookies["AuthCookie"] != undefined){
+    let campground = await campgroundData.getCampById(req.params.id);
+    let isOwner = false;
+    if(req.cookies["AuthCookie"] == campground.owner){
+      isOwner = true;
+    }
+    res.render("campground_details.handlebars",{campground: campground, isOwner: isOwner});
+  }else{
+    res.render("user_login.handlebars", {
+      error: true,
+      message: "Not logged in: Login using Username and Password"
+    });
   }
-  res.render("campground_details.handlebars",{campground: campground, isOwner: isOwner});
 });
 
 router.get("/edit/id/:id", async (req, res) => {
-  let campground = await campgroundData.getCampById(req.params.id);
-  res.render("campground_edit.handlebars",{campground: campground});
+  if(req.cookies["AuthCookie"] != undefined){
+    let campground = await campgroundData.getCampById(req.params.id);
+    res.render("campground_edit.handlebars",{campground: campground});
+  }else{
+    res.render("user_login.handlebars", {
+      error: true,
+      message: "Not logged in: Login using Username and Password"
+    });
+  }
 });
 
 router.get("/delete/:id", async (req, res) => {
-  await campgroundData.removeCampById(req.params.id);
-  res.redirect("/campgrounds");
-  //res.render("campground_edit.handlebars",{campground: campground});
+  if(req.cookies["AuthCookie"] != undefined){
+    await campgroundData.removeCampById(req.params.id);
+    res.redirect("/campgrounds");
+    //res.render("campground_edit.handlebars",{campground: campground});
+  }else{
+    res.render("user_login.handlebars", {
+      error: true,
+      message: "Not logged in: Login using Username and Password"
+    });
+  }
 });
 
 
