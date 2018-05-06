@@ -1,11 +1,4 @@
-<div class="sidenav">
-  <a href="/campgrounds">Campground</a>
-  <br/>
-  <a href="/users/account">Account</a>
-  <br/>
-  <a href="/users/logout">Logout</a>
-  <br/>
-</div>
+{{> navbar }}
 
 <div class="main">
 	<h1>Account Information</h1>
@@ -34,6 +27,6 @@
 	</form>
 
   <form id = "edit-delete-form" action = "/users/delete" method = "get">
-	    <button class = "deleteButton" type = "submit">Delete</button>
+	    <button onclick = "return confirm('Are you sure you would like to delete the account?')" class = "deleteButton" type = "submit">Delete</button>
 	</form>
 </div>

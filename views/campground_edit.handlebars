@@ -1,23 +1,16 @@
 <!-- Side navigation -->
-<div class="sidenav">
-  <a href="/campgrounds">Campgrounds</a>
-  <br/>
-  <a href="/users/account">Edit Account</a>
-  <br/>
-  <a href="/users/logout">Logout</a>
-  <br/>
-</div>
+{{> navbar }}
 
 <div class="main">
     <h1>{{campground.name}}</h1>
     <p>Edit Campground details:</p>
 
     <form id = "edit-campground-form" action = "/campgrounds/edit/info/{{campground._id}}" method = "post">
-  
+
       <label>Campground Title: </label>
       <input id = "name" name = "name" value="{{campground.name}}">
       <br/>
-  
+
       <label>Description: </label>
       <br/>
       <textarea id = "description" name = "description" rows="3" cols="50">{{campground.description}}</textarea>
@@ -34,7 +27,7 @@
       <label>Contact Information: </label>
       <input id = "contact_info" name = "contact_info"  value="{{campground.contact_info}}">
       <br/>
-  
+
         <button type = "submit">Submit</button>
     </form>
 
@@ -48,8 +41,8 @@
         <input type="file" name="pic" accept="image/*">
     </form>
 
-    <form  id = "delete-campground" action="/campgrounds/delete/{{campground._id}}" method = "get">
-      <button type = "submit">Delete Campground</button>
+    <form id = "delete-campground" action="/campgrounds/delete/{{campground._id}}" method = "get">
+      <button onclick = "return confirm('Are you sure you would like to delete this campground?')" class = "deleteButton" type = "submit">Delete Campground</button>
     </form>
 
 </div>

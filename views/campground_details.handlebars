@@ -1,13 +1,6 @@
 
 <!-- Side navigation -->
-<div class="sidenav">
-  <a href="/campgrounds">Campgrounds</a>
-  <br/>
-  <a href="/users/account">Account</a>
-  <br/>
-  <a href="/users/logout">Logout</a>
-  <br/>
-</div>
+{{> navbar }}
 
 <div class="main">
     <h1>{{campground.name}}</h1>
@@ -27,5 +20,7 @@
              Contact Information: {{campground.contact_info}}
             <br/>
 
-            <a href="/campgrounds/edit/id/{{campground._id}}">Edit this campground</a>
+            {{#if isOwner}}
+        		  <a href="/campgrounds/edit/id/{{campground._id}}"><button>Edit this campground</button></a>
+        		{{/if}}
 </div>

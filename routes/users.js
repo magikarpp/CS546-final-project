@@ -41,7 +41,8 @@ router.get("/account", async (req, res) => {
 
     res.render('user_account.handlebars', {
       username: userInfo.profile.username,
-      bio: userInfo.profile.bio
+      bio: userInfo.profile.bio,
+      campgrounds: userInfo.campgrounds
     });
   } else{
     res.status(403).render("user_login.handlebars", {

@@ -1,11 +1,4 @@
-<div class="sidenav">
-  <a href="/campgrounds">Campground</a>
-  <br/>
-  <a href="/users/account">Account</a>
-  <br/>
-  <a href="/users/logout">Logout</a>
-  <br/>
-</div>
+{{> navbar }}
 
 <div class="main">
 	<h1>Account Information</h1>
@@ -20,11 +13,32 @@
 		{{bio}}
 	</p>
 
+	<h2>My Campgrounds: </h2>
+	{{#if campgrounds}}
+	<ul>
+			{{#each campgrounds}}
+			<li class="cg-list">
+			<!--ul-->
+					{{#if this.image}}
+					<!--li class="horizontal"-->
+							<img src="{{this.image}}" alt="campground_image" style="width:128px;height:128px;">
+							<br/>
+					<!--/li-->
+					{{/if}}
+					<!--li-->
+							<a href="/campgrounds/id/{{this._id}}">{{this.name}}</a>
+							<br/>
+							Description: {{this.description}}
+							<br/>
+							Price per night: ${{this.price}}
+					</li>
+			<!--/ul-->
+			<!--/li-->
+			{{/each}}
+	</ul>
+	{{/if}}
+
 	<form id = "edit-form" action = "/users/edit" method = "get">
 	    <button type = "submit">Edit Account</button>
-	</form>
-
-	<form id = "logout-form" action = "/users/logout" method = "get">
-	    <button type = "submit">Log Out</button>
 	</form>
 </div>

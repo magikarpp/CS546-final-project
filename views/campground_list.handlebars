@@ -1,17 +1,14 @@
 
 <!-- Side navigation -->
-<div class="sidenav">
-  <a href="/campgrounds/new">New Campground</a>
-  <br/>
-  <a href="/users/account">Account</a>
-  <br/>
-  <a href="/users/logout">Logout</a>
-  <br/>
-</div>
+{{> navbar }}
 
 <div class="main">
     <h1>Campgrounds:</h1>
     <p>Here's a list of the campgrounds!</p>
+
+    <form id = "new-campground-form" action = "/campgrounds/new" method = "get">
+  	    <button type = "submit">New Campground</button>
+  	</form>
 
     {{#if campgrounds}}
     <ul>
@@ -31,7 +28,7 @@
                 <br/>
                 Price per night: ${{this.price}}
             </li>
-        <!--/ul--> 
+        <!--/ul-->
         <!--/li-->
         {{/each}}
     </ul>

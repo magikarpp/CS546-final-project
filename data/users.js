@@ -73,11 +73,14 @@ module.exports = {
           message: "Bio invalid"
         };
       }
+      
+      var newArray = new Array();
 
       const newUser = {
         sessionid: "0", //This will be set to a non-zero uuid upon login
         hashedPassword: password, //hashed using createHashedPassword
         _id: uuidv4(),
+        campgrounds: newArray,
         profile: {
             username: username,
             bio: bio

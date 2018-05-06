@@ -15,19 +15,23 @@ router.get("/new", (req, res) => {
 
 router.get("/id/:id", async (req, res) => {
   let campground = await campgroundData.getCampById(req.params.id);
-  res.render("campground_details.handlebars",{campground: campground});
-}); 
+  let isOwner = false;
+  if(req.cookies["AuthCookie"] == campground.owner){
+    isOwner = true;
+  }
+  res.render("campground_details.handlebars",{campground: campground, isOwner: isOwner});
+});
 
 router.get("/edit/id/:id", async (req, res) => {
   let campground = await campgroundData.getCampById(req.params.id);
   res.render("campground_edit.handlebars",{campground: campground});
-}); 
+});
 
 router.get("/delete/:id", async (req, res) => {
   await campgroundData.removeCampById(req.params.id);
   res.redirect("/campgrounds");
   //res.render("campground_edit.handlebars",{campground: campground});
-}); 
+});
 
 
 router.post("/new", async (req, res) => {
@@ -40,9 +44,9 @@ router.post("/new", async (req, res) => {
       else{
         console.log("Didn't upload a file..");
       }
-      let newCampground = await campgroundData.addCampground(req.body, data);
-      
-      
+      let newCampground = await campgroundData.addCampground(req.body, data, req.cookies["AuthCookie"]);
+
+
 
       res.redirect("/campgrounds");
   } catch (e) {
