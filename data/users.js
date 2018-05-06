@@ -152,4 +152,30 @@ module.exports = {
       return hash;
     },
 
+    async deleteUser(id){
+      if(!id){
+        throw new Error("id must be provided");
+      }
+      const userCollection = await users();
+      const user = await userCollection.findOne({ _id: id });
+      if(!user){
+        return {
+          status: false,
+          message: `User does not exist`
+        };
+      }
+      const username = user.profile.username;
+      const result = await userCollection.deleteOne({ _id: id });
+      if (!result){
+        return {
+          status: false,
+          message: `User not found with id: ${id}`
+        };
+      }
+      return {
+        status: true,
+        message: `User Account "${username}" has been deleted`
+      };
+    }
+
 };

@@ -89,13 +89,11 @@ router.get("/edit", async (req, res) => {
 router.post("/edit", async (req, res) => {
   if(req.cookies["AuthCookie"] != undefined){
     let currrentUser = req.cookies["AuthCookie"];
-    console.log(currrentUser);
+
     let user = await userData.getUserByUsername(currrentUser);
 
     let username = req.body.username;
     let bio = req.body.bio;
-    console.log(username);
-    console.log(bio);
 
     let result = await userData.updateUser(user._id, username, bio);
 
@@ -115,7 +113,28 @@ router.post("/edit", async (req, res) => {
 });
 
 router.get("/delete", async (req, res) => {
-  
+  if(req.cookies["AuthCookie"] != undefined){
+    let currrentUser = req.cookies["AuthCookie"];
+    let user = await userData.getUserByUsername(currrentUser);
+
+    let result = await userData.deleteUser(user._id);
+
+    if(result.status){
+      res.clearCookie("AuthCookie");
+      res.render("user_login.handlebars", {
+        error: true,
+        message: result.message
+      });
+    }else{
+      res.render("user_edit.handlebars", {
+        user,
+        error: true,
+        message: result.message
+      });
+    }
+  }else{
+    res.redirect("/users");
+  }
 });
 
 
