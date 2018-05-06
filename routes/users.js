@@ -14,7 +14,7 @@ router.get("/", async (req, res) => {
 });
 
 router.get("/login", (req, res) => {
-  res.render("login.handlebars");
+  res.render("user_login.handlebars");
 });
 
 router.post("/login", async (req, res) => {
@@ -27,7 +27,7 @@ router.post("/login", async (req, res) => {
     //res.redirect("/users/account");
     res.redirect("/campgrounds");
   }else{
-    res.render("login.handlebars", {
+    res.render("user_login.handlebars", {
       error: true,
       message: result.message
     });
@@ -39,12 +39,12 @@ router.get("/account", async (req, res) => {
     let username = req.cookies["AuthCookie"];
     let userInfo = await userData.getUserByUsername(username);
 
-    res.render('account.handlebars', {
+    res.render('user_account.handlebars', {
       username: userInfo.profile.username,
       bio: userInfo.profile.bio
     });
   } else{
-    res.status(403).render("login.handlebars", {
+    res.status(403).render("user_login.handlebars", {
       error: true,
       message: "Not logged in: Login using Username and Password"
     });
@@ -57,7 +57,7 @@ router.get("/logout", async (req, res) => {
 });
 
 router.get("/signup", (req, res) => {
-  res.render("signup.handlebars");
+  res.render("user_signup.handlebars");
 });
 
 router.post("/signup", async (req, res) => {
@@ -69,7 +69,7 @@ router.post("/signup", async (req, res) => {
   if(newUser.status){
     res.redirect("/users/login");
   }else{
-    res.render("signup.handlebars", {
+    res.render("user_signup.handlebars", {
       error: true,
       message: newUser.message
     });
@@ -80,7 +80,7 @@ router.get("/edit", async (req, res) => {
   if(req.cookies["AuthCookie"] != undefined){
     let username = req.cookies["AuthCookie"];
     let user = await userData.getUserByUsername(username);
-    res.render("edit.handlebars", {user});
+    res.render("user_edit.handlebars", {user});
   }else{
     res.redirect("/users");
   }
@@ -89,13 +89,11 @@ router.get("/edit", async (req, res) => {
 router.post("/edit", async (req, res) => {
   if(req.cookies["AuthCookie"] != undefined){
     let currrentUser = req.cookies["AuthCookie"];
-    console.log(currrentUser);
+
     let user = await userData.getUserByUsername(currrentUser);
 
     let username = req.body.username;
     let bio = req.body.bio;
-    console.log(username);
-    console.log(bio);
 
     let result = await userData.updateUser(user._id, username, bio);
 
@@ -103,7 +101,32 @@ router.post("/edit", async (req, res) => {
       res.cookie("AuthCookie", username);
       res.redirect("/users/account");
     }else{
-      res.render("edit.handlebars", {
+      res.render("user_edit.handlebars", {
+        user,
+        error: true,
+        message: result.message
+      });
+    }
+  }else{
+    res.redirect("/users");
+  }
+});
+
+router.get("/delete", async (req, res) => {
+  if(req.cookies["AuthCookie"] != undefined){
+    let currrentUser = req.cookies["AuthCookie"];
+    let user = await userData.getUserByUsername(currrentUser);
+
+    let result = await userData.deleteUser(user._id);
+
+    if(result.status){
+      res.clearCookie("AuthCookie");
+      res.render("user_login.handlebars", {
+        error: true,
+        message: result.message
+      });
+    }else{
+      res.render("user_edit.handlebars", {
         user,
         error: true,
         message: result.message

@@ -1,0 +1,39 @@
+<div class="sidenav">
+  <a href="/campgrounds">Campground</a>
+  <br/>
+  <a href="/users/account">Account</a>
+  <br/>
+  <a href="/users/logout">Logout</a>
+  <br/>
+</div>
+
+<div class="main">
+	<h1>Account Information</h1>
+
+	<form id = "edit-submit-form" action = "/users/edit" method = "post">
+
+		<h2>Username: </h2>
+		<p>
+			<input id = "username" name = "username" placeholder = "username" value = "{{user.profile.username}}">
+		</p>
+
+		<h2>Bio: </h2>
+		<p>
+			<input id = "bio" name = "bio" placeholder = "bio" value = "{{user.profile.bio}}">
+		</p>
+
+		{{#if error}}
+		<h3>{{message}}</h3>
+		{{/if}}
+
+	  <button type = "submit">Submit</button>
+	</form>
+
+	<form id = "edit-cancel-form" action = "/users/account" method = "get">
+	    <button type = "submit">Cancel</button>
+	</form>
+
+  <form id = "edit-delete-form" action = "/users/delete" method = "get">
+	    <button class = "deleteButton" type = "submit">Delete</button>
+	</form>
+</div>

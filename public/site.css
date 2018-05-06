@@ -40,6 +40,13 @@ img {
   height: 350px;
 }
 
+.deleteButton {
+  background-color: #f44336;
+  font-size: 15px;
+  color: white;
+  padding: 3px 7px;
+}
+
 .sidenav {
   height: 100%; /* Full-height: remove this if you want "auto" height */
   width: 160px; /* Set the width of the sidebar */
@@ -61,7 +68,6 @@ img {
 li.cg-list{
     border-bottom: 2px solid rgb(182, 176, 176);
 }
-
 li.horizontal{
   float: left;
 }
