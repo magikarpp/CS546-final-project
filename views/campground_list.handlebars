@@ -14,19 +14,26 @@
     <p>Here's a list of the campgrounds!</p>
 
     {{#if campgrounds}}
-    <ol id="attempts" class="attempts"></ol>
+    <ul>
         {{#each campgrounds}}
         <li class="cg-list">
-           <a href="/campgrounds/id/{{this._id}}">{{this.name}}</a>
-            <br/>
-             {{#if this.image}}
-            <img src="{{this.image}}" alt="campground_image" style="width:128px;height:128px;">
-            <br/>
+        <!--ul-->
+            {{#if this.image}}
+            <!--li class="horizontal"-->
+                <img src="{{this.image}}" alt="campground_image" style="width:128px;height:128px;">
+                <br/>
+            <!--/li-->
             {{/if}}
-            Description: {{this.description}}
-            <br/>
-            Location: {{this.location}}
-        </li>
+            <!--li-->
+                <a href="/campgrounds/id/{{this._id}}">{{this.name}}</a>
+                <br/>
+                Description: {{this.description}}
+                <br/>
+                Price per night: ${{this.price}}
+            </li>
+        <!--/ul--> 
+        <!--/li-->
         {{/each}}
+    </ul>
     {{/if}}
 </div>

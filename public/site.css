@@ -61,3 +61,7 @@ img {
 li.cg-list{
     border-bottom: 2px solid rgb(182, 176, 176);
 }
+
+li.horizontal{
+  float: left;
+}
