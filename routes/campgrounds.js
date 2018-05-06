@@ -9,18 +9,30 @@ router.get("/", async (req, res) => {
   res.render("campground_list.handlebars",{campgrounds: campgroundList});
 });
 
-router.get("/:id", async (req, res) => {
-  let campground = await campgroundData.getCampById(req.params.id);
-  res.render("campground_details.handlebars",{campground: campground});
-});
-
 router.get("/new", (req, res) => {
   res.render("campground_new.handlebars");
 });
 
+router.get("/id/:id", async (req, res) => {
+  let campground = await campgroundData.getCampById(req.params.id);
+  res.render("campground_details.handlebars",{campground: campground});
+}); 
+
+
+
 router.post("/new", async (req, res) => {
     try {
-      let newCampground = await campgroundData.addCampground(req.body);
+      let data = "";
+      if(req.files.pic){
+        data ='data:' + req.files.pic.mimetype + ';base64,' + req.files.pic.data.toString('base64');
+        //console.log(data.slice(0,100));
+      }
+      else{
+        console.log("Didn't upload a file..");
+      }
+      let newCampground = await campgroundData.addCampground(req.body, data);
+      
+      
 
       res.redirect("/campgrounds");
   } catch (e) {

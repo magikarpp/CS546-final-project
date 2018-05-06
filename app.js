@@ -4,6 +4,7 @@ const cookieParser = require("cookie-parser");
 const app = express();
 const static = express.static(__dirname + "/public");
 const connection = require("./config/mongoConnection");
+const fileUpload = require('express-fileupload');
 
 
 const configRoutes = require("./routes");
@@ -13,6 +14,7 @@ app.use("/public", static);
 app.use(cookieParser());
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded());
+app.use(fileUpload());
 
 app.engine("handlebars", exphbs({ defaultLayout: "main" }));
 app.set("view engine", "handlebars");

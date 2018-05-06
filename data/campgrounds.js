@@ -25,7 +25,7 @@ module.exports = {
         return campground;
     },
 
-    async addCampground({name, description, location}) {
+    async addCampground({name, description, location}, image) {
         //ERROR CHECK!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!1
         const campgroundCollection = await campgrounds();
         //console.log(name);
@@ -35,7 +35,8 @@ module.exports = {
           _id: setId,
           name: name,
           description: description,
-          location: location
+          location: location,
+          image: image
         };
 
         const newInsertInformation = await campgroundCollection.insertOne(newCampground);
