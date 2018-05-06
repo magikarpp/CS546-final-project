@@ -2,7 +2,7 @@
 <div class="sidenav">
   <a href="/campgrounds">Campgrounds</a>
   <br/>
-  <a href="/users/account">Edit Account</a>
+  <a href="/users/account">Account</a>
   <br/>
   <a href="/users/logout">Logout</a>
   <br/>
@@ -13,11 +13,11 @@
     <p>Fill in the details for a new campground below!</p>
 
 <form id = "new-campground-form" action = "/campgrounds/new" method = "post" encType="multipart/form-data">
-  
+
       <label>Campground Title: </label>
       <input id = "name" name = "name">
       <br/>
-  
+
       <label>Description: </label>
       <input id = "description" name = "description">
       <br/>
@@ -27,7 +27,7 @@
       <br/>
 
        <input type="file" name="pic" accept="image/*">
-  
+
     <button type = "submit">Submit</button>
 </form>
 

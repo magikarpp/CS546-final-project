@@ -1,0 +1,30 @@
+<div class="sidenav">
+  <a href="/campgrounds/">New Campground</a>
+  <br/>
+  <a href="/users/account">Account</a>
+  <br/>
+  <a href="/users/logout">Logout</a>
+  <br/>
+</div>
+
+<div class="main">
+	<h1>Account Information</h1>
+
+	<h2>Username: </h2>
+	<p>
+		{{username}}
+	</p>
+
+	<h2>Bio: </h2>
+	<p>
+		{{bio}}
+	</p>
+
+	<form id = "edit-form" action = "/users/edit" method = "get">
+	    <button type = "submit">Edit Account</button>
+	</form>
+
+	<form id = "logout-form" action = "/users/logout" method = "get">
+	    <button type = "submit">Log Out</button>
+	</form>
+</div>
