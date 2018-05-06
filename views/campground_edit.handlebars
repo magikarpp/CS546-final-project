@@ -27,7 +27,7 @@
       <label>Contact Information: </label>
       <input id = "contact_info" name = "contact_info"  value="{{campground.contact_info}}">
       <br/>
-
+        <!--Submit Button should go below the picture and above the "cancel" button-->
         <button type = "submit">Submit</button>
     </form>
 
@@ -41,6 +41,7 @@
         <input type="file" name="pic" accept="image/*">
     </form>
 
+    <a href="/campgrounds/id/{{this._id}}"><button>Cancel</button></a>
     <form id = "delete-campground" action="/campgrounds/delete/{{campground._id}}" method = "get">
       <button onclick = "return confirm('Are you sure you would like to delete this campground?')" class = "deleteButton" type = "submit">Delete Campground</button>
     </form>

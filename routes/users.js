@@ -14,14 +14,7 @@ router.get("/", async (req, res) => {
 });
 
 router.get("/login", (req, res) => {
-  if(req.cookies["AuthCookie"] != undefined){
-    res.render("user_login.handlebars");
-  } else{
-    res.status(403).render("user_login.handlebars", {
-      error: true,
-      message: "Not logged in: Login using Username and Password"
-    });
-  }
+  res.render("user_login.handlebars");
 });
 
 router.post("/login", async (req, res) => {
