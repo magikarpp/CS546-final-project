@@ -91,7 +91,13 @@ router.post("/new", async (req, res) => {
 
 router.post("/edit/info/:id", async (req, res) => {
   try {
-    await campgroundData.updateCampById(req.params.id, req.body);
+
+    let data = "";
+      if(req.files.pic){
+        data ='data:' + req.files.pic.mimetype + ';base64,' + req.files.pic.data.toString('base64');
+        //console.log(data.slice(0,100));
+      }
+    await campgroundData.updateCampById(req.params.id, req.body, data);
 
     res.redirect("/campgrounds/id/" + req.params.id);
 } catch (e) {

@@ -5,7 +5,7 @@
     <h1>{{campground.name}}</h1>
     <p>Edit Campground details:</p>
 
-    <form id = "edit-campground-form" action = "/campgrounds/edit/info/{{campground._id}}" method = "post">
+    <form id = "edit-campground-form" action = "/campgrounds/edit/info/{{campground._id}}" method = "post" encType="multipart/form-data">
 
       <label>Campground Title: </label>
       <input id = "name" name = "name" value="{{campground.name}}">
@@ -27,6 +27,9 @@
       <label>Contact Information: </label>
       <input id = "contact_info" name = "contact_info"  value="{{campground.contact_info}}">
       <br/>
+
+        <label>Change Campground Picture: </label>
+        <input type="file" name="pic" accept="image/*">
         <!--Submit Button should go below the picture and above the "cancel" button-->
         <button type = "submit">Submit</button>
     </form>
@@ -36,10 +39,10 @@
     <br/>
     {{/if}}
 
-    <form  id = "edit-campground-image-form" action="/campgrounds/edit/image/{{campground._id}}"  encType="multipart/form-data" method = "post">
+    <!--form  id = "edit-campground-image-form" action="/campgrounds/edit/image/{{campground._id}}"  encType="multipart/form-data" method = "post">
         <label>Change Campground Picture: </label>
         <input type="file" name="pic" accept="image/*">
-    </form>
+    </form-->
 
     <a href="/campgrounds/id/{{this._id}}"><button>Cancel</button></a>
     <form id = "delete-campground" action="/campgrounds/delete/{{campground._id}}" method = "get">
