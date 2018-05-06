@@ -12,8 +12,11 @@
 <div class="main">
     <h1>{{campground.name}}</h1>
     <p>Campground details:</p>
+
+            {{#if campground.image}}
             <img src="{{campground.image}}" alt="campground_image" style="width:512px;height:512px;">
             <br/>
+            {{/if}}
             Description: {{campground.description}}
             <br/>
             Location: {{campground.location}}

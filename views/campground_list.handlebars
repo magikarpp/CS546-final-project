@@ -16,9 +16,13 @@
     {{#if campgrounds}}
     <ol id="attempts" class="attempts"></ol>
         {{#each campgrounds}}
-        <li>
+        <li class="cg-list">
            <a href="/campgrounds/id/{{this._id}}">{{this.name}}</a>
             <br/>
+             {{#if this.image}}
+            <img src="{{this.image}}" alt="campground_image" style="width:128px;height:128px;">
+            <br/>
+            {{/if}}
             Description: {{this.description}}
             <br/>
             Location: {{this.location}}

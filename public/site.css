@@ -57,3 +57,7 @@ img {
   margin-left: 160px; /* Same as the width of the sidebar */
   padding: 0px 10px;
 }
+
+li.cg-list{
+    border-bottom: 2px solid rgb(182, 176, 176);
+}
