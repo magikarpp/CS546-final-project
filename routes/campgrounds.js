@@ -18,6 +18,16 @@ router.get("/id/:id", async (req, res) => {
   res.render("campground_details.handlebars",{campground: campground});
 }); 
 
+router.get("/edit/id/:id", async (req, res) => {
+  let campground = await campgroundData.getCampById(req.params.id);
+  res.render("campground_edit.handlebars",{campground: campground});
+}); 
+
+router.get("/delete/:id", async (req, res) => {
+  await campgroundData.removeCampById(req.params.id);
+  res.redirect("/campgrounds");
+  //res.render("campground_edit.handlebars",{campground: campground});
+}); 
 
 
 router.post("/new", async (req, res) => {
@@ -38,6 +48,16 @@ router.post("/new", async (req, res) => {
   } catch (e) {
     res.status(500).json({ error: e.message });
   }
+});
+
+router.post("/edit/info/:id", async (req, res) => {
+  try {
+    await campgroundData.updateCampById(req.params.id, req.body);
+
+    res.redirect("/campgrounds/id/" + req.params.id);
+} catch (e) {
+  res.status(500).json({ error: e.message });
+}
 });
 
 module.exports = router;

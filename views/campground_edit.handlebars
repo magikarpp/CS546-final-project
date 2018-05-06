@@ -1,0 +1,55 @@
+<!-- Side navigation -->
+<div class="sidenav">
+  <a href="/campgrounds">Campgrounds</a>
+  <br/>
+  <a href="/users/account">Edit Account</a>
+  <br/>
+  <a href="/users/logout">Logout</a>
+  <br/>
+</div>
+
+<div class="main">
+    <h1>{{campground.name}}</h1>
+    <p>Edit Campground details:</p>
+
+    <form id = "edit-campground-form" action = "/campgrounds/edit/info/{{campground._id}}" method = "post">
+  
+      <label>Campground Title: </label>
+      <input id = "name" name = "name" value="{{campground.name}}">
+      <br/>
+  
+      <label>Description: </label>
+      <br/>
+      <textarea id = "description" name = "description" rows="3" cols="50">{{campground.description}}</textarea>
+      <br/>
+
+      <label>Price per night: </label>
+      <input id = "price" name = "price"  value="{{campground.price}}">
+      <br/>
+
+      <label>Address/Location: </label>
+      <input id = "location" name = "location"  value="{{campground.location}}">
+      <br/>
+
+      <label>Contact Information: </label>
+      <input id = "contact_info" name = "contact_info"  value="{{campground.contact_info}}">
+      <br/>
+  
+        <button type = "submit">Submit</button>
+    </form>
+
+    {{#if campground.image}}
+    <img src="{{campground.image}}" alt="campground_image" style="width:256px;height:256px;">
+    <br/>
+    {{/if}}
+
+    <form  id = "edit-campground-image-form" action="/campgrounds/edit/image"  encType="multipart/form-data" method = "post">
+        <label>Change Campground Picture: </label>
+        <input type="file" name="pic" accept="image/*">
+    </form>
+
+    <form  id = "delete-campground" action="/campgrounds/delete/{{campground._id}}" method = "get">
+      <button type = "submit">Delete Campground</button>
+    </form>
+
+</div>
