@@ -5,6 +5,13 @@ const campgrounds = mongoCollections.campgrounds;
 const uuidv4 = require('uuid/v4');
 
 module.exports = {
+
+    async getAllCampgrounds() {
+        return campgrounds().then(campgroundCollection => {
+          return campgroundCollection.find({}).toArray();
+        });
+      },
+
     async getCampById(id) {
         if(id === undefined || typeof id !== "string"){
             throw new Error("id is not a string");
