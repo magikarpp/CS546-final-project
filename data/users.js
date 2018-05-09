@@ -45,6 +45,12 @@ module.exports = {
         return user;
     },
 
+    createHashedPassword: (password) => {
+      var salt = bcrypt.genSaltSync(7);
+      let hash = bcrypt.hashSync(password, salt);
+      return hash;
+    },
+
     async addUser({username, password, bio}) {
       const userCollection = await users();
       const user = await userCollection.findOne({ "profile.username": username });
@@ -73,12 +79,13 @@ module.exports = {
           message: "Bio invalid"
         };
       }
-      
+
+      var passwordHashed = this.createHashedPassword(password);
       var newArray = new Array();
 
       const newUser = {
         sessionid: "0", //This will be set to a non-zero uuid upon login
-        hashedPassword: password, //hashed using createHashedPassword
+        hashedPassword: passwordHashed, //hashed using createHashedPassword
         _id: uuidv4(),
         campgrounds: newArray,
         profile: {
@@ -144,15 +151,6 @@ module.exports = {
           message: `${username}`
         };
       }
-    },
-
-    createHashedPassword: (password) => {
-      if(password == "" || password === undefined || typeof password !== "string"){
-        throw new Error("Invalid password");
-      }
-      var salt = bcrypt.genSaltSync(7);
-      let hash = bcrypt.hashSync(password, salt);
-      return hash;
     },
 
     async deleteUser(id){

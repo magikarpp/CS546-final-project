@@ -8,7 +8,6 @@ router.get("/", async (req, res) => {
   if(req.cookies["AuthCookie"] == undefined){
     res.redirect("/users/login");
   }else{
-    //res.redirect("/users/account");
     res.redirect("/campgrounds");
   }
 });
@@ -24,7 +23,6 @@ router.post("/login", async (req, res) => {
 
   if(result.status){
     res.cookie("AuthCookie", username);
-    //res.redirect("/users/account");
     res.redirect("/campgrounds");
   }else{
     res.render("user_login.handlebars", {
@@ -63,7 +61,7 @@ router.get("/signup", (req, res) => {
 
 router.post("/signup", async (req, res) => {
   let username = req.body.username;
-  let password = userData.createHashedPassword(req.body.password);
+  let password = req.body.password;
   let bio = req.body.bio;
 
   let newUser = await userData.addUser({username, password, bio});

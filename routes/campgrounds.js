@@ -68,20 +68,16 @@ router.get("/delete/:id", async (req, res) => {
   }
 });
 
-
 router.post("/new", async (req, res) => {
     try {
       let data = "";
       if(req.files.pic){
         data ='data:' + req.files.pic.mimetype + ';base64,' + req.files.pic.data.toString('base64');
-        //console.log(data.slice(0,100));
       }
       else{
         console.log("Didn't upload a file..");
       }
       let newCampground = await campgroundData.addCampground(req.body, data, req.cookies["AuthCookie"]);
-
-
 
       res.redirect("/campgrounds");
   } catch (e) {
