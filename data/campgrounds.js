@@ -27,7 +27,7 @@ module.exports = {
         return campground;
     },
 
-    async removeCampById(id) {
+    async removeCampById(id, username) {
         if(id === undefined || typeof id !== "string"){
             throw new Error("id is not a string");
         }
@@ -38,6 +38,15 @@ module.exports = {
 
         //delete campground on associated account
         //NEEDS TO BE FILLED IN
+        const user = await userCollection.findOne({ "profile.username": username });
+        for (camp in user.campgrounds){
+            if(user.campgrounds[camp]._id == id){
+                user.campgrounds.splice(camp, 1);
+                await userCollection.findOneAndUpdate ({ _id: user._id }, {"$set": { campgrounds: user.campgrounds }});
+            }
+        }
+
+
         
         //delete campground
         await campgroundCollection.deleteOne({ _id: id });

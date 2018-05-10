@@ -61,7 +61,7 @@ router.get("/edit/id/:id", async (req, res) => {
 
 router.get("/delete/:id", async (req, res) => {
   if(req.cookies["AuthCookie"] != undefined){
-    await campgroundData.removeCampById(req.params.id);
+    await campgroundData.removeCampById(req.params.id, req.cookies["AuthCookie"]);
     res.redirect("/campgrounds");
     //res.render("campground_edit.handlebars",{campground: campground});
   }else{
