@@ -17,14 +17,18 @@
         <!--ul-->
             {{#if this.image}}
             <!--li class="horizontal"-->
-                <img src="{{this.image}}" alt="campground_image" style="width:128px;height:128px;">
+                <a href="/campgrounds/id/{{this._id}}"><img src="{{this.image}}" alt="campground_image" style="width:128px;height:128px;"></a>
                 <br/>
             <!--/li-->
             {{/if}}
             <!--li-->
                 <a href="/campgrounds/id/{{this._id}}">{{this.name}}</a>
                 <br/>
+                {{#if this.description}}
                 Description: {{this.description}}
+                {{else}}
+                Description: N/A
+                {{/if}}
                 <br/>
                 Price per night: ${{this.price}}
             </li>

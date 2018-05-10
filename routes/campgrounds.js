@@ -30,11 +30,12 @@ router.get("/new", (req, res) => {
 router.get("/id/:id", async (req, res) => {
   if(req.cookies["AuthCookie"] != undefined){
     let campground = await campgroundData.getCampById(req.params.id);
+    let rating = await campgroundData.getRatingById(req.params.id);
     let isOwner = false;
     if(req.cookies["AuthCookie"] == campground.owner){
       isOwner = true;
     }
-    res.render("campground_details.handlebars",{campground: campground, isOwner: isOwner});
+    res.render("campground_details.handlebars",{campground: campground, isOwner: isOwner, rating: rating});
   }else{
     res.render("user_login.handlebars", {
       error: true,

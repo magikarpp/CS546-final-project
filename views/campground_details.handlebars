@@ -3,9 +3,10 @@
 {{> navbar }}
 
 <div class="main">
-    <a href="/campgrounds/"><button>Back</button></a>
+    <form id = "back-form" action = "/campgrounds/" method = "get">
+        <button type = "submit">Back</button>
+    </form>
     <h1>{{campground.name}}</h1>
-    <p>Campground details:</p>
 
             {{#if campground.image}}
             <img src="{{campground.image}}" alt="campground_image" style="width:512px;height:512px;">
@@ -17,12 +18,16 @@
             <br/>
             Location: {{campground.location}}
             <br/>
-
              Contact Information: {{campground.contact_info}}
+            <br/>
+            Rating: {{rating}}
             <br/>
 
             {{#if isOwner}}
-        		  <a href="/campgrounds/edit/id/{{campground._id}}"><button>Edit this campground</button></a>
+        		  <!--a href="/campgrounds/edit/id/{{campground._id}}"><button>Edit this campground</button></a-->
+                <form id = "edit-form" action = "/campgrounds/edit/id/{{campground._id}}" method = "get">
+	                <button type = "submit">Edit this campground</button>
+                </form>
         	{{/if}}
 
             <h3>Reviews</h3>
@@ -31,7 +36,11 @@
                 {{#each campground.reviews}}
                 <li>
                     <p>
-                        {{this.reviewer}} says: {{this.review}}
+                        User: {{this.reviewer}} 
+                        <br/>
+                        Rating (Out of 5): {{this.rating}}
+                        <br/>
+                        Review: {{this.review}}
                     </p>
                 </li>
                 {{/each}}
@@ -41,10 +50,15 @@
             {{/if}}
 
             <form id = "add-review-form" action = "/campgrounds/review/{{campground._id}}" method = "post">
+                <label>Add rating: </label>
+                <input id = "rating" name = "rating">
+                <br/>
+                
                 <label>Add Review: </label>
                 <br/>
                 <textarea id = "review" name = "review" rows="3" cols="50"></textarea>
                 <button type = "submit">Submit</button>
             </form>
+            <script src="/public/js/review_form.js"></script>
 
 </div>

@@ -33,6 +33,7 @@
         <!--Submit Button should go below the picture and above the "cancel" button-->
         <button type = "submit">Submit</button>
     </form>
+    <script src="/public/js/edit_form.js"></script>
 
     {{#if campground.image}}
     <img src="{{campground.image}}" alt="campground_image" style="width:256px;height:256px;">
@@ -44,9 +45,13 @@
         <input type="file" name="pic" accept="image/*">
     </form-->
 
-    <a href="/campgrounds/id/{{this._id}}"><button>Cancel</button></a>
+    <form id = "cancel-form" action = "/campgrounds/id/{{campground._id}}" method = "get">
+	    <button type = "submit">Cancel</button>
+    </form>
+
     <form id = "delete-campground" action="/campgrounds/delete/{{campground._id}}" method = "get">
       <button onclick = "return confirm('Are you sure you would like to delete this campground?')" class = "deleteButton" type = "submit">Delete Campground</button>
     </form>
-
+    
+    
 </div>

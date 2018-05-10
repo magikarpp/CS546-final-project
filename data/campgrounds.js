@@ -81,11 +81,33 @@ module.exports = {
         return await this.getCampById(newInsertInformation.insertedId);
     },
 
-    async addReviewById(id, {review}, reviewer){
+    async addReviewById(id, {review, rating}, reviewer){
         const campgroundCollection = await campgrounds();
         const camp = await campgroundCollection.findOne({_id:id});
-        camp.reviews.push({review, reviewer});
+        camp.reviews.push({review, rating, reviewer});
         await campgroundCollection.findOneAndUpdate ({ _id: id }, {"$set": { reviews: camp.reviews }});
+    },
+    
+    async getRatingById(id) {
+        if(id === undefined || typeof id !== "string"){
+            throw new Error("id is not a string");
+        }
+        if (!id) throw new Error("You must provide an id to search for");
+
+        const campgroundCollection = await campgrounds();
+        const campground = await campgroundCollection.findOne({ _id: id });
+        if (campground === null) throw new Error("No campground with that id");
+
+        let campgroundRating = 0;
+        for (review in campground.reviews){
+            //console.log("Current Rating: " + campground.reviews[review].rating);
+            campgroundRating += parseInt(campground.reviews[review].rating);
+            //console.log("Total Rating so far: " + campgroundRating);
+        }
+        campgroundRating /= campground.reviews.length;
+        //console.log(campgroundRating);
+        //console.log(campground.reviews.length);
+        return campgroundRating;
     }
 
 };
