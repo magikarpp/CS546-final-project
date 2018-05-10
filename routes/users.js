@@ -136,13 +136,18 @@ router.get("/delete", async (req, res) => {
   }
 });
 
+router.get("/seed", async (req, res) => {
 
-
-
-
-
-
-
+    let userList = userData.getAllUsers();
+    if (userList.length == 0){
+      await userData.addUser({username: "username", password: "password", bio: "bio"});
+      //let user = await userData.getUserByUsername(username);
+      res.redirect("/campgrounds/seed");
+    }
+    else{
+      res.redirect("/users");
+    }
+});
 
 
 

@@ -33,6 +33,12 @@ module.exports = {
       return user;
     },
 
+    async getAllUsers() {
+        return users().then(userCollection => {
+          return userCollection.find({}).toArray();
+        });
+    },
+
     async getUserById(id) {
         if(id === undefined || typeof id !== "string"){
             throw new Error("id is not a string");

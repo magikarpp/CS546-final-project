@@ -31,6 +31,9 @@ router.get("/id/:id", async (req, res) => {
   if(req.cookies["AuthCookie"] != undefined){
     let campground = await campgroundData.getCampById(req.params.id);
     let rating = await campgroundData.getRatingById(req.params.id);
+    if (isNaN(rating)){
+      rating = "No Ratings";
+    }
     let isOwner = false;
     if(req.cookies["AuthCookie"] == campground.owner){
       isOwner = true;
@@ -110,6 +113,14 @@ router.post("/review/:id", async (req, res) => {
 } catch (e) {
   res.status(500).json({ error: e.message });
 }
+});
+
+router.get("/seed", async (req, res) => {
+    let campId = await campgroundData.addCampground({name: "Campground #1", description: "description", price: "35", location: "location", contact_info: "contact info"}, "", "username")
+    console.log("Is this a valid camp id??: " + campId._id);
+    await campgroundData.addReviewById(campId._id, {review: "This is my review!", rating: "4"}, "RandomReviewer");
+    //let campgroundList = await campgroundData.getAllCampgrounds();
+    res.redirect("/users");
 });
 
 module.exports = router;
