@@ -9,10 +9,12 @@ router.get("/", async (req, res) => {
     let campgroundList = await campgroundData.getAllCampgrounds();
     res.render("campground_list.handlebars",{campgrounds: campgroundList});
   }else{
-    res.render("user_login.handlebars", {
-      error: true,
-      message: "Not logged in: Login using Username and Password"
-    });
+    res.redirect("/users/login");
+
+    // res.render("user_login.handlebars", {
+    //   error: true,
+    //   message: "Not logged in: Login using Username and Password"
+    // });
   }
 });
 
@@ -20,10 +22,7 @@ router.get("/new", (req, res) => {
   if(req.cookies["AuthCookie"] != undefined){
     res.render("campground_new.handlebars");
   }else{
-    res.render("user_login.handlebars", {
-      error: true,
-      message: "Not logged in: Login using Username and Password"
-    });
+    res.redirect("/users/login");
   }
 });
 
@@ -40,10 +39,7 @@ router.get("/id/:id", async (req, res) => {
     }
     res.render("campground_details.handlebars",{campground: campground, isOwner: isOwner, rating: rating});
   }else{
-    res.render("user_login.handlebars", {
-      error: true,
-      message: "Not logged in: Login using Username and Password"
-    });
+    res.redirect("/users/login");
   }
 });
 
@@ -52,10 +48,7 @@ router.get("/edit/id/:id", async (req, res) => {
     let campground = await campgroundData.getCampById(req.params.id);
     res.render("campground_edit.handlebars",{campground: campground});
   }else{
-    res.render("user_login.handlebars", {
-      error: true,
-      message: "Not logged in: Login using Username and Password"
-    });
+    res.redirect("/users/login");
   }
 });
 
@@ -65,25 +58,22 @@ router.get("/delete/:id", async (req, res) => {
     res.redirect("/campgrounds");
     //res.render("campground_edit.handlebars",{campground: campground});
   }else{
-    res.render("user_login.handlebars", {
-      error: true,
-      message: "Not logged in: Login using Username and Password"
-    });
+    res.redirect("/users/login");
   }
 });
 
 router.post("/new", async (req, res) => {
-    try {
-      let data = "";
-      if(req.files.pic){
-        data ='data:' + req.files.pic.mimetype + ';base64,' + req.files.pic.data.toString('base64');
-      }
-      else{
-        console.log("Didn't upload a file..");
-      }
-      let newCampground = await campgroundData.addCampground(req.body, data, req.cookies["AuthCookie"]);
+  try {
+    let data = "";
+    if(req.files.pic){
+      data ='data:' + req.files.pic.mimetype + ';base64,' + req.files.pic.data.toString('base64');
+    }
+    else{
+      console.log("Didn't upload a file..");
+    }
+    let newCampground = await campgroundData.addCampground(req.body, data, req.cookies["AuthCookie"]);
 
-      res.redirect("/campgrounds");
+    res.redirect("/campgrounds");
   } catch (e) {
     res.status(500).json({ error: e.message });
   }
@@ -117,7 +107,7 @@ router.post("/review/:id", async (req, res) => {
 
 router.get("/seed", async (req, res) => {
     let campId = await campgroundData.addCampground({name: "Campground #1", description: "description", price: "35", location: "location", contact_info: "contact info"}, "", "username")
-    console.log("Is this a valid camp id??: " + campId._id);
+    //console.log("Is this a valid camp id??: " + campId._id);
     await campgroundData.addReviewById(campId._id, {review: "This is my review!", rating: "4"}, "RandomReviewer");
     //let campgroundList = await campgroundData.getAllCampgrounds();
     res.redirect("/users");

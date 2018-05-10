@@ -32,12 +32,17 @@ module.exports = {
             throw new Error("id is not a string");
         }
         if (!id) throw new Error("You must provide an id to search for");
+        if(username === undefined || typeof username !== "string"){
+            throw new Error("username is not a string");
+        }
+        if (!username) throw new Error("Invalid username");
 
         const userCollection = await users();
         const campgroundCollection = await campgrounds();
 
+        const campground = await campgroundCollection.findOne({ _id: id });
+        if (campground === null) throw new Error("No campground with that id");
         //delete campground on associated account
-        //NEEDS TO BE FILLED IN
         const user = await userCollection.findOne({ "profile.username": username });
         for (camp in user.campgrounds){
             if(user.campgrounds[camp]._id == id){
@@ -45,9 +50,6 @@ module.exports = {
                 await userCollection.findOneAndUpdate ({ _id: user._id }, {"$set": { campgrounds: user.campgrounds }});
             }
         }
-
-
-        
         //delete campground
         await campgroundCollection.deleteOne({ _id: id });
     },
@@ -96,8 +98,26 @@ module.exports = {
     },
 
     async addReviewById(id, {review, rating}, reviewer){
+        if(id === undefined || typeof id !== "string"){
+            throw new Error("id is not a string");
+        }
+        if (!id) throw new Error("You must provide an id to search for");
+        if(review === undefined || typeof review !== "string"){
+            throw new Error("review is not a string");
+        }
+        if (!review) throw new Error("You must provide an review to search for");
+        if(rating === undefined || typeof rating !== "string" || isNaN(rating)){
+            throw new Error("rating is not a string or number");
+        }
+        if (!rating) throw new Error("You must provide an rating to search for");
+        if(reviewer === undefined || typeof reviewer !== "string"){
+            throw new Error("reviewer is not a string");
+        }
+        if (!reviewer) throw new Error("You must provide an reviewer to search for");
+
         const campgroundCollection = await campgrounds();
         const camp = await campgroundCollection.findOne({_id:id});
+        if (camp === null) throw new Error("No campground with that id");
         camp.reviews.push({review, rating, reviewer});
         await campgroundCollection.findOneAndUpdate ({ _id: id }, {"$set": { reviews: camp.reviews }});
     },
