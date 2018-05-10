@@ -1,5 +1,6 @@
 const mongoCollections = require("../config/mongoCollections");
 const users = mongoCollections.users;
+const campgrounds = mongoCollections.campgrounds;
 //const users = require("./users");
 //const uuid = require("node-uuid");
 const uuidv4 = require('uuid/v4');
@@ -158,6 +159,8 @@ module.exports = {
         throw new Error("id must be provided");
       }
       const userCollection = await users();
+      const campgroundCollection = await campgrounds();
+
       const user = await userCollection.findOne({ _id: id });
       if(!user){
         return {
@@ -165,6 +168,13 @@ module.exports = {
           message: `User does not exist`
         };
       }
+
+      //delete campgrounds associated with user
+      for(var i = 0; i < user.campgrounds.length; i++){
+        await campgroundCollection.deleteOne({ _id: user.campgrounds[i]._id });
+      }
+
+      //delete user
       const username = user.profile.username;
       const result = await userCollection.deleteOne({ _id: id });
       if (!result){

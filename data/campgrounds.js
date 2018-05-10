@@ -1,9 +1,9 @@
 const mongoCollections = require("../config/mongoCollections");
 const campgrounds = mongoCollections.campgrounds;
+const users = mongoCollections.users;
 //const users = require("./users");
 //const uuid = require("node-uuid");
 const uuidv4 = require('uuid/v4');
-const users = mongoCollections.users;
 const userData = require('./users');
 
 module.exports = {
@@ -33,7 +33,13 @@ module.exports = {
         }
         if (!id) throw new Error("You must provide an id to search for");
 
+        const userCollection = await users();
         const campgroundCollection = await campgrounds();
+
+        //delete campground on associated account
+        //NEEDS TO BE FILLED IN
+        
+        //delete campground
         await campgroundCollection.deleteOne({ _id: id });
     },
 
@@ -51,7 +57,6 @@ module.exports = {
     },
 
     async addCampground({name, description, price, location, contact_info}, image, owner) {
-        //ERROR CHECK!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!1
         const campgroundCollection = await campgrounds();
         const userCollection = await users();
         //console.log(name);
