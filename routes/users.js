@@ -147,5 +147,13 @@ router.get("/seed", async (req, res) => {
     }
 });
 
+router.get("/dump", async (req, res) => {
+  let userList = await userData.getAllUsers();
+  for(userInd in userList){
+    await userData.deleteUser(userList[userInd]._id);
+  }
+  res.redirect("/campgrounds/dump");
+});
+
 
 module.exports = router;
