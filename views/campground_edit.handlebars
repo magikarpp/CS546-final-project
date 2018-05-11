@@ -7,7 +7,7 @@
 
     <form id = "edit-campground-form" action = "/campgrounds/edit/info/{{campground._id}}" method = "post" encType="multipart/form-data">
 
-      <label>Campground Title: </label>
+      <label>Campground Title:* </label>
       <input id = "name" name = "name" value="{{campground.name}}">
       <br/>
 
@@ -16,7 +16,7 @@
       <textarea id = "description" name = "description" rows="3" cols="50">{{campground.description}}</textarea>
       <br/>
 
-      <label>Price per night: </label>
+      <label>Price per night:* </label>
       <input id = "price" name = "price"  value="{{campground.price}}">
       <br/>
 
@@ -24,7 +24,7 @@
       <input id = "location" name = "location"  value="{{campground.location}}">
       <br/>
 
-      <label>Contact Information: </label>
+      <label>Contact Information:* </label>
       <input id = "contact_info" name = "contact_info"  value="{{campground.contact_info}}">
       <br/>
 
@@ -52,6 +52,6 @@
     <form id = "delete-campground" action="/campgrounds/delete/{{campground._id}}" method = "get">
       <button onclick = "return confirm('Are you sure you would like to delete this campground?')" class = "deleteButton" type = "submit">Delete Campground</button>
     </form>
-    
-    
+
+
 </div>
