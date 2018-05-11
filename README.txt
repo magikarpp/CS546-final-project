@@ -9,3 +9,4 @@ Please perform the following steps to run the website and seed the test data:
 	- NOTE: This will only work when the user collection is empty!
 6. Sign in - After seeding the database, there is a user with the following credentials: Username= username, Password= password
 7. From here, you can explore the site
+8. To delete all of the data stored in MongoDB, go to this URL: "localhost:3000/users/dump"

@@ -142,6 +142,13 @@ module.exports = {
         //console.log(campgroundRating);
         //console.log(campground.reviews.length);
         return campgroundRating;
+    },
+
+    async removeAllCamps() {
+        let camps = await this.getAllCampgrounds();
+        for(camp in camps){
+            await campgroundCollection.deleteOne({ _id: camps[camp]._id });
+        }
     }
 
 };

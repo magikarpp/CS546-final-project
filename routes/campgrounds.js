@@ -113,4 +113,13 @@ router.get("/seed", async (req, res) => {
     res.redirect("/users");
 });
 
+router.get("/dump", async (req, res) => {
+  let campgroundList = await campgroundData.getAllCampgrounds();
+  for(campInd in campgroundList){
+    await campgroundData.removeAllCamps();
+  }
+  res.redirect("/users/logout");
+});
+
+
 module.exports = router;
