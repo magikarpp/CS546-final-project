@@ -12,7 +12,7 @@
 
 		<h2>Bio: </h2>
 		<p>
-			<input id = "bio" name = "bio" placeholder = "bio" value = "{{user.profile.bio}}">
+			<textarea id = "bio" name = "bio" placeholder = "bio" rows="3" cols="50">{{user.profile.bio}}</textarea>
 		</p>
 
 		{{#if error}}
